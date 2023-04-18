@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import asyncStorageHelpers from '../helpers/async-storage.helpers.js';
 
-import colors from '../config/colors';
+import colors from '../config/colors.js';
 
-function AuthenticationScreen(props) {
+function LoginScreen({navigation}) {
   const [form, setForm] = React.useState({ email: '', password: '' });
 
   const handleChangeText = value => {
@@ -32,7 +32,7 @@ function AuthenticationScreen(props) {
 
       const data = await res.json();
       await asyncStorageHelpers.storeObjectData('@user', data);
-
+      navigation.navigate('Restaurants')
     } catch (e) {
       console.error(e);
     }
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AuthenticationScreen;
+export default LoginScreen;
