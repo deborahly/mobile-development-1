@@ -5,8 +5,7 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello!</Text>
-      <WelcomeScreen />
+      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
   );
