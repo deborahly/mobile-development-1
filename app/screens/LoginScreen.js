@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../auth.js';
 import {
   StyleSheet,
   Text,
@@ -8,34 +9,14 @@ import {
   TextInput,
   Button,
 } from 'react-native';
-import asyncStorageHelpers from '../helpers/async-storage.helpers.js';
-
 import colors from '../config/colors.js';
 
-function LoginScreen({navigation}) {
+const LoginScreen = () => {
   const [form, setForm] = React.useState({ email: '', password: '' });
+  const { signIn } = useAuth();
 
   const handleChangeText = value => {
     return setForm(prev => ({ ...prev, ...value }));
-  };
-
-  const handleOnPress = async () => {
-    console.log(form);
-    try {
-      const res = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        body: JSON.stringify(form),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await res.json();
-      await asyncStorageHelpers.storeObjectData('@user', data);
-      navigation.navigate('Restaurants')
-    } catch (e) {
-      console.error(e);
-    }
   };
 
   return (
@@ -60,7 +41,7 @@ function LoginScreen({navigation}) {
           placeholder='Password'
         />
         <Button
-          onPress={handleOnPress}
+          onPress={() => signIn(form)}
           title='Log In'
           color={colors.primary}
           accessibilityLabel='Submit log in form'
@@ -68,7 +49,7 @@ function LoginScreen({navigation}) {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
