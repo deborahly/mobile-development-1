@@ -3,13 +3,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from './auth';
 import LoginScreen from './screens/LoginScreen';
 import RestaurantsScreen from './screens/RestaurantsScreen';
+import Header from './shared/Header';
 
 const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Restaurants' component={RestaurantsScreen} />
+      <Stack.Screen
+        name='Restaurants'
+        component={RestaurantsScreen}
+        options={{ header: () => <Header /> }}
+      />
     </Stack.Navigator>
   );
 };
@@ -17,7 +22,7 @@ const AppStack = () => {
 const AuthStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Login' component={LoginScreen} />
+      <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };
