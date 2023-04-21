@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useAuth } from './auth';
+import Header from './shared/Header';
 import LoginScreen from './screens/LoginScreen';
 import RestaurantsScreen from './screens/RestaurantsScreen';
+import RestaurantScreen from './screens/RestaurantScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
-import Header from './shared/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBurger } from '@fortawesome/free-solid-svg-icons/faBurger';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons/faClockRotateLeft';
@@ -13,7 +15,7 @@ import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons/faClockRota
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const AppStack = () => {
+const AppTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -23,7 +25,7 @@ const AppStack = () => {
     >
       <Tab.Screen
         name='Restaurants'
-        component={RestaurantsScreen}
+        component={RestaurantStackScreen}
         options={{
           header: () => <Header />,
           tabBarIcon: ({ focused }) => <FontAwesomeIcon icon={faBurger} />,
@@ -34,7 +36,9 @@ const AppStack = () => {
         component={OrderHistoryScreen}
         options={{
           header: () => <Header />,
-          tabBarIcon: ({ focused }) => <FontAwesomeIcon icon={faClockRotateLeft} />,
+          tabBarIcon: ({ focused }) => (
+            <FontAwesomeIcon icon={faClockRotateLeft} />
+          ),
         }}
       />
     </Tab.Navigator>
@@ -53,17 +57,35 @@ const AuthStack = () => {
   );
 };
 
-const Router = () => {
-  const { authData, loading } = useAuth();
+const RestaurantStack = createNativeStackNavigator();
 
-  //   if (loading) {
-  //     //You can see the component implementation at the repository
-  //     return <Loading />;
-  //   }
+const RestaurantStackScreen = () => {
+  return (
+    <RestaurantStack.Navigator>
+      <RestaurantStack.Screen
+        name='Restaurants'
+        component={RestaurantsScreen}
+        options={{ headerShown: false }}
+      />
+      <RestaurantStack.Screen
+        name='Restaurant'
+        component={RestaurantScreen}
+        options={{ headerShown: false }}
+      />
+    </RestaurantStack.Navigator>
+  );
+};
+
+const Router = () => {
+  const { authData, loadStorageData } = useAuth();
+
+  useEffect(() => {
+    loadStorageData();
+  }, []);
 
   return (
     <NavigationContainer>
-      {authData ? <AppStack /> : <AuthStack />}
+      {authData ? <AppTab /> : <AuthStack />}
     </NavigationContainer>
   );
 };
