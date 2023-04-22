@@ -4,7 +4,7 @@ const getRestaurants = async form => {
       const res = await fetch('http://localhost:3000/api/restaurants');
       return await res.json();
     }
-    
+
     if (!form.rating) {
       const res = await fetch(
         `http://localhost:3000/api/restaurants?price_range=${form.price_range}`
@@ -30,4 +30,9 @@ const getRestaurants = async form => {
   }
 };
 
-export default { getRestaurants };
+const getRestaurant = async id => {
+  const res = await fetch(`http://localhost:3000/api/restaurants/${id}`);
+  return await res.json();
+};
+
+export default { getRestaurants, getRestaurant };
