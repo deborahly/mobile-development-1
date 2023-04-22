@@ -57,7 +57,7 @@ function RestaurantsScreen(props) {
       </View>
 
       <View style={styles.restaurants}>
-        {restaurants.length != 0 &&
+        {!restaurants.error && restaurants.length != 0 &&
           restaurants.map(restaurant => (
             <TouchableOpacity
               key={restaurant.name}
