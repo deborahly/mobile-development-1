@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
+import helpersUtils from '../utils/helpersUtils';
 
 const OrderConfirmModal = ({ modalVisible, setModalVisible, order }) => {
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(helpersUtils.calculateOrder(order));
+  });
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -24,20 +31,26 @@ const OrderConfirmModal = ({ modalVisible, setModalVisible, order }) => {
               </Pressable>
             </View>
 
-            {Object.entries(order).find(item => item[1] != 0) ? (
-              Object.entries(order).map(item => {
-                if (item[1] != 0) {
-                  return (
-                    <View style={styles.item}>
-                      <Text>{item[0]}</Text>
-                      <Text>{item[1]}</Text>
-                    </View>
-                  );
-                }
-              })
-            ) : (
-              <Text>No items added</Text>
-            )}
+            <View style={styles.contentBox}>
+              {Object.entries(order).find(item => item[1].quantity != 0) ? (
+                [
+                  Object.entries(order).map(item => {
+                    if (item[1].quantity != 0) {
+                      return (
+                        <View style={styles.item}>
+                          <Text>{item[0]}</Text>
+                          <Text>x {item[1].quantity}</Text>
+                          <Text>$ {item[1].cost}</Text>
+                        </View>
+                      );
+                    }
+                  }),
+                  <Text style={styles.total}>Total: {total}</Text>,
+                ]
+              ) : (
+                <Text>No items added</Text>
+              )}
+            </View>
           </View>
         </View>
       </Modal>
@@ -93,6 +106,11 @@ const styles = StyleSheet.create({
     alignItems: 'top',
     width: '100%',
   },
+  contentBox: {
+    flex: 1,
+    gap: 10,
+    width: '100%',
+  },
   item: {
     flex: 1,
     flexDirection: 'row',
@@ -101,6 +119,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 20,
     width: '100%',
+  },
+  total: {
+    alignSelf: 'flex-end',
   },
 });
 
