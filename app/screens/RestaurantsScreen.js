@@ -63,7 +63,7 @@ function RestaurantsScreen(props) {
               key={restaurant.name}
               onPress={() =>
                 props.navigation.navigate('Restaurant', {
-                  params: { restaurant: restaurant.name },
+                  restaurantId: restaurant.id,
                 })
               }
             >

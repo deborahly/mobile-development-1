@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   formBox: {
     border: '1px solid black',
-    borderRadius: '5px',
+    borderRadius: 5,
     height: '30%',
     width: '75%',
   },
