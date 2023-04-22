@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, SafeAreaView, View, StyleSheet, Button } from 'react-native';
+import { useAuth } from '../auth';
 import restaurantsUtils from '../utils/restaurantsUtils';
 import productsUtils from '../utils/productsUtils';
 import ProductCard from '../components/ProductCard';
@@ -8,10 +9,15 @@ import colors from '../config/colors';
 
 function RestaurantScreen({ route }) {
   const restaurantId = route.params.restaurantId;
+  const { authData, loadStorageData } = useAuth();
   const [selectedRestaurant, setSelectedRestaurant] = useState({});
   const [products, setProducts] = useState([]);
   const [order, setOrder] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    loadStorageData();
+  }, []);
 
   useEffect(() => {
     const getInfo = async () => {
@@ -68,6 +74,8 @@ function RestaurantScreen({ route }) {
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
           order={order}
+          restaurantId={restaurantId}
+          customerId={authData.customer_id}
         />
       </SafeAreaView>
     )

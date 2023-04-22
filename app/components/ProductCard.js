@@ -7,7 +7,11 @@ function ProductCard({ product, updateOrder }) {
 
   useEffect(() => {
     updateOrder({
-      [product.name]: { quantity: productCount, cost: product.cost },
+      [product.name]: {
+        id: product.id,
+        quantity: productCount,
+        cost: product.cost,
+      },
     });
   }, [productCount]);
 

@@ -1,13 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
 import helpersUtils from '../utils/helpersUtils';
+import ordersUtils from '../utils/ordersUtils';
+import colors from '../config/colors';
 
-const OrderConfirmModal = ({ modalVisible, setModalVisible, order }) => {
+const OrderConfirmModal = ({
+  modalVisible,
+  setModalVisible,
+  order,
+  restaurantId,
+  customerId,
+}) => {
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [fetchResult, setFetchResult] = useState(null);
 
   useEffect(() => {
     setTotal(helpersUtils.calculateOrder(order));
   });
+
+  const handleConfirmOrder = async () => {
+    setLoading(true);
+    const data = await ordersUtils.createOrder(restaurantId, customerId, order);
+    setLoading(false);
+
+    if (data.id) {
+      setFetchResult('success');
+    } else {
+      setFetchResult('failed');
+    }
+
+    return;
+  };
 
   return (
     <View style={styles.centeredView}>
@@ -27,7 +51,7 @@ const OrderConfirmModal = ({ modalVisible, setModalVisible, order }) => {
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.closeButton}>X</Text>
+                <Text>X</Text>
               </Pressable>
             </View>
 
@@ -49,6 +73,29 @@ const OrderConfirmModal = ({ modalVisible, setModalVisible, order }) => {
                 ]
               ) : (
                 <Text>No items added</Text>
+              )}
+            </View>
+
+            <View>
+              <Pressable
+                style={[styles.button, styles.buttonConfirm]}
+                onPress={handleConfirmOrder}
+              >
+                {loading ? (
+                  <Text>Processing Order...</Text>
+                ) : fetchResult == 'success' ? (
+                  <Text></Text>
+                ) : (
+                  <Text>Confirm Order</Text>
+                )}
+              </Pressable>
+              {fetchResult == 'success' && (
+                <Text>Thank you! Your order has been received.</Text>
+              )}
+              {fetchResult == 'failed' && (
+                <Text>
+                  Your order was not processed successfully. Please try again.
+                </Text>
               )}
             </View>
           </View>
@@ -122,6 +169,9 @@ const styles = StyleSheet.create({
   },
   total: {
     alignSelf: 'flex-end',
+  },
+  buttonConfirm: {
+    backgroundColor: colors.primary,
   },
 });
 
