@@ -6,7 +6,9 @@ function ProductCard({ product, updateOrder }) {
   const [productCount, setProductCount] = useState(0);
 
   useEffect(() => {
-    updateOrder({ [product.name]: productCount });
+    updateOrder({
+      [product.name]: { quantity: productCount, cost: product.cost },
+    });
   }, [productCount]);
 
   const removeItem = () => {
