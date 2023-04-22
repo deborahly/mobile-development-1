@@ -31,8 +31,12 @@ const getRestaurants = async form => {
 };
 
 const getRestaurant = async id => {
-  const res = await fetch(`http://localhost:3000/api/restaurants/${id}`);
-  return await res.json();
+  try {
+    const res = await fetch(`http://localhost:3000/api/restaurants/${id}`);
+    return await res.json();
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export default { getRestaurants, getRestaurant };
