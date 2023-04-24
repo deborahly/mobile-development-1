@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import OrderModal from '../components/OrderModel';
 import ordersUtils from '../utils/ordersUtils';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
@@ -8,6 +9,8 @@ import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons/faMagni
 
 function OrderHistoryScreen() {
   const [orders, setOrders] = useState([]);
+  const [orderToShow, setOrderToShow] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async (type, id) => {
@@ -17,16 +20,9 @@ function OrderHistoryScreen() {
     fetchOrders('customer', 1);
   }, []);
 
-  const createOrdersHTML = orders => {
-    return orders.map(order => {
-      return (
-        <tr>
-          <td>{order.restaurant_name}</td>
-          <td>{order.status}</td>
-          <td>{<FontAwesomeIcon icon={faMagnifyingGlassPlus} />}</td>
-        </tr>
-      );
-    });
+  const handleShowModal = order => {
+    setModalVisible(true);
+    setOrderToShow(order);
   };
 
   return (
@@ -48,13 +44,26 @@ function OrderHistoryScreen() {
                   <tr>
                     <td>{order.restaurant_name}</td>
                     <td>{order.status}</td>
-                    <td>{<FontAwesomeIcon icon={faMagnifyingGlassPlus} />}</td>
+                    <td>
+                      <TouchableOpacity
+                        key={order.id}
+                        onPress={() => handleShowModal(order)}
+                      >
+                        <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
+                      </TouchableOpacity>
+                    </td>
                   </tr>
                 );
               })}
           </tbody>
         </Table>
       </Container>
+
+      <OrderModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        orderToShow={orderToShow}
+      />
     </SafeAreaView>
   );
 }
