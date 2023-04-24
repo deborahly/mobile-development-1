@@ -15,10 +15,6 @@ const OrderConfirmModal = ({
   const [loading, setLoading] = useState(false);
   const [fetchResult, setFetchResult] = useState(null);
 
-  useEffect(() => {
-    setTotal(helpersUtils.calculateOrder(order));
-  });
-
   const handleConfirmOrder = async () => {
     setLoading(true);
     const data = await ordersUtils.createOrder(restaurantId, customerId, order);
@@ -64,12 +60,14 @@ const OrderConfirmModal = ({
                         <View style={styles.item}>
                           <Text>{item[0]}</Text>
                           <Text>x {item[1].quantity}</Text>
-                          <Text>$ {item[1].cost}</Text>
+                          <Text>$ {item[1].cost * item[1].quantity}</Text>
                         </View>
                       );
                     }
                   }),
-                  <Text style={styles.total}>Total: {total}</Text>,
+                  <Text style={styles.total}>
+                    Total: {helpersUtils.calculateOrder(order)}
+                  </Text>,
                 ]
               ) : (
                 <Text>No items added</Text>

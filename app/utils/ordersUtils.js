@@ -27,4 +27,21 @@ const createOrder = async (restaurantId, customerId, order) => {
   }
 };
 
-export default { createOrder };
+const getOrders = async (type, id) => {
+  const validTypes = ['customer', 'restaurant', 'courier'];
+
+  if (!validTypes.includes(type)) {
+    return 'Invalid type. Please try again.';
+  }
+
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/orders?type=${type}&id=${id}`
+    );
+    return await res.json();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export default { createOrder, getOrders };
