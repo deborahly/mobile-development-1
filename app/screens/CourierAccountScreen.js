@@ -1,21 +1,35 @@
 import { useEffect, useState } from 'react';
 import Account from '../components/Account';
-import couriersUtils from '../utils/couriersUtils';
+import accountUtils from '../utils/accountUtils';
 import { useAuth } from '../auth';
 
-function CourierAccountScreen(props) {
+function CourierAccountScreen() {
   const [account, setAccount] = useState({});
   const { authData } = useAuth();
 
   useEffect(() => {
-    const fetchAccount = async id => {
-      const data = await couriersUtils.getCourier(id);
+    const fetchAccount = async (id, type) => {
+      const data = await accountUtils.getAccount(id, type);
       setAccount(data);
     };
-    fetchAccount(authData.courier_id);
+    fetchAccount(authData.courier_id, 'courier');
   }, []);
 
-  return <Account accountType={'Courier'} account={account} />;
+  const submitUpdate = async form => {
+    return await accountUtils.updateAccount(
+      authData.courier_id,
+      'courier',
+      form
+    );
+  };
+
+  return (
+    <Account
+      accountType={'Courier'}
+      account={account}
+      submitUpdate={submitUpdate}
+    />
+  );
 }
 
 export default CourierAccountScreen;

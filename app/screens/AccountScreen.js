@@ -1,21 +1,35 @@
 import { useEffect, useState } from 'react';
 import Account from '../components/Account';
-import customersUtils from '../utils/customersUtils';
+import accountUtils from '../utils/accountUtils';
 import { useAuth } from '../auth';
 
-function AccountScreen(props) {
-  const [account, setAccount] = useState({});
+function AccountScreen() {
   const { authData } = useAuth();
+  const [account, setAccount] = useState({});
 
   useEffect(() => {
-    const fetchAccount = async id => {
-      const data = await customersUtils.getCustomer(id);
+    const fetchAccount = async (id, type) => {
+      const data = await accountUtils.getAccount(id, type);
       setAccount(data);
     };
-    fetchAccount(authData.customer_id);
+    fetchAccount(authData.customer_id, 'customer');
   }, []);
 
-  return <Account accountType={'Customer'} account={account} />;
+  const submitUpdate = async form => {
+    const data = await accountUtils.updateAccount(
+      authData.customer_id,
+      'customer',
+      form
+    );
+  };
+
+  return (
+    <Account
+      accountType={'Customer'}
+      account={account}
+      submitUpdate={submitUpdate}
+    />
+  );
 }
 
 export default AccountScreen;
