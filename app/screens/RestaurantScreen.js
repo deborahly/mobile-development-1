@@ -4,7 +4,7 @@ import { useAuth } from '../auth';
 import restaurantsUtils from '../utils/restaurantsUtils';
 import productsUtils from '../utils/productsUtils';
 import ProductCard from '../components/ProductCard';
-import OrderConfirmModal from '../components/OrderConfirmModel';
+import OrderConfirmModal from '../components/OrderConfirmModal';
 import colors from '../config/colors';
 
 function RestaurantScreen({ route }) {
