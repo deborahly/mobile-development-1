@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
-import OrderModal from '../components/OrderModel';
+import OrderHistoryModal from '../components/OrderHistoryModal';
 import ordersUtils from '../utils/ordersUtils';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
@@ -59,7 +59,7 @@ function OrderHistoryScreen() {
         </Table>
       </Container>
 
-      <OrderModal
+      <OrderHistoryModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         orderToShow={orderToShow}
