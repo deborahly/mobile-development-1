@@ -11,4 +11,12 @@ const calculateOrder = order => {
   return totalCost;
 };
 
-export default { calculateOrder };
+const formatDate = date => {
+  const dateObject = new Date(date);
+  return `${dateObject.getFullYear()}/${(
+    '0' +
+    (dateObject.getMonth() + 1)
+  ).slice(-2)}/${dateObject.getDate()}`;
+};
+
+export default { calculateOrder, formatDate };

@@ -1,7 +1,8 @@
 import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
+import helpersUtils from '../utils/helpersUtils';
 import colors from '../config/colors';
 
-const OrderModal = ({ modalVisible, setModalVisible, orderToShow }) => {
+const CourierOrderModal = ({ modalVisible, setModalVisible, orderToShow }) => {
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -15,12 +16,11 @@ const OrderModal = ({ modalVisible, setModalVisible, orderToShow }) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.headingBox}>
-              <Text style={styles.modalText}>
-                {orderToShow.restaurant_name}
-              </Text>
-              <Text>{orderToShow.date}</Text>
-              <Text>{orderToShow.status}</Text>
-              <Text>{orderToShow.courier_name}</Text>
+              <View>
+                <Text style={styles.modalText}>Delivery Details</Text>
+                <Text>{orderToShow.status}</Text>
+              </View>
+
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -30,6 +30,11 @@ const OrderModal = ({ modalVisible, setModalVisible, orderToShow }) => {
             </View>
 
             <View style={styles.contentBox}>
+              <View>
+                <Text>{orderToShow.customer_address}</Text>
+                <Text>{orderToShow.restaurant_name}</Text>
+                <Text>{helpersUtils.formatDate(orderToShow.date)}</Text>
+              </View>
               {[
                 orderToShow.products &&
                   orderToShow.products.map(item => {
@@ -92,7 +97,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   headingBox: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     gap: 10,
     justifyContent: 'space-between',
@@ -121,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderModal;
+export default CourierOrderModal;
