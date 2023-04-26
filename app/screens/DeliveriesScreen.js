@@ -22,6 +22,17 @@ function DeliveriesScreen() {
     fetchOrders('courier', authData.courier_id);
   }, []);
 
+  const handleChangeStatus = async (order, i) => {
+    const newOrder = await ordersUtils.updateStatus(order);
+
+    // Update orders only if status changed
+    if (JSON.stringify(order) !== JSON.stringify(newOrder)) {
+      const newOrders = [...orders];
+      newOrders[i] = newOrder;
+      setOrders(newOrders);
+    }
+  };
+
   const handleShowModal = order => {
     setModalVisible(true);
     setOrderToShow(order);
@@ -42,17 +53,20 @@ function DeliveriesScreen() {
           </thead>
           <tbody>
             {orders.length !== 0 &&
-              orders.map(order => {
+              orders.map((order, i) => {
                 return (
-                  <tr>
+                  <tr key={order.id}>
                     <td>{order.restaurant_name}</td>
                     <td>{order.customer_address}</td>
-                    <td>{order.status}</td>
                     <td>
                       <TouchableOpacity
-                        key={order.id}
-                        onPress={() => handleShowModal(order)}
+                        onPress={() => handleChangeStatus(order, i)}
                       >
+                        <Text>{order.status}</Text>
+                      </TouchableOpacity>
+                    </td>
+                    <td>
+                      <TouchableOpacity onPress={() => handleShowModal(order)}>
                         <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
                       </TouchableOpacity>
                     </td>
