@@ -37,9 +37,9 @@ const CourierOrderModal = ({ modalVisible, setModalVisible, orderToShow }) => {
               </View>
               {[
                 orderToShow.products &&
-                  orderToShow.products.map(item => {
+                  orderToShow.products.map((item, i) => {
                     return (
-                      <View style={styles.item}>
+                      <View key={i} style={styles.item}>
                         <Text>{item.product_name}</Text>
                         <Text>x {item.quantity}</Text>
                         <Text>$ {item.total_cost}</Text>
