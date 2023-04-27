@@ -9,7 +9,7 @@ import {
   TextInput,
   Button,
 } from 'react-native';
-import colors from '../config/colors.js';
+import colors from '../styles/colors.js';
 
 const LoginScreen = () => {
   const [form, setForm] = React.useState({ email: '', password: '' });

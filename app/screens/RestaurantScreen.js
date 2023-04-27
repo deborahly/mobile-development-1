@@ -5,7 +5,7 @@ import restaurantsUtils from '../utils/restaurantsUtils';
 import productsUtils from '../utils/productsUtils';
 import ProductCard from '../components/ProductCard';
 import OrderConfirmModal from '../components/OrderConfirmModal';
-import colors from '../config/colors';
+import colors from '../styles/colors';
 
 function RestaurantScreen({ route }) {
   const restaurantId = route.params.restaurantId;
@@ -34,14 +34,15 @@ function RestaurantScreen({ route }) {
 
   const updateOrder = change => {
     setOrder(prev => ({ ...prev, ...change }));
-    console.log(order);
   };
 
   return (
     Object.keys(selectedRestaurant).length != 0 &&
     products.length != 0 && (
       <SafeAreaView>
-        <View>RESTAURANT MENU</View>
+        <View>
+          <Text>RESTAURANT MENU</Text>
+        </View>
 
         <View style={styles.infoBox}>
           <View>

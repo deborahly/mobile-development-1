@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
-import colors from '../config/colors';
+import colors from '../styles/colors';
 
 function ProductCard({ product, updateOrder }) {
   const [productCount, setProductCount] = useState(0);

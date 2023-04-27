@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
 import helpersUtils from '../utils/helpersUtils';
-import colors from '../config/colors';
+import colors from '../styles/colors';
 
 const CourierOrderModal = ({ modalVisible, setModalVisible, orderToShow }) => {
   return (

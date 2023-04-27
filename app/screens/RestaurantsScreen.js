@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import restaurantsUtils from '../utils/restaurantsUtils';
-import colors from '../config/colors';
+import colors from '../styles/colors';
 import Card from 'react-bootstrap/Card';
 
 function RestaurantsScreen(props) {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView, Text, TextInput, Button } from 'react-native';
 import accountUtils from '../utils/accountUtils';
-import colors from '../config/colors';
+import colors from '../styles/colors';
 
 function Account({ accountType, account, submitUpdate }) {
   const [form, setForm] = useState({

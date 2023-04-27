@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '../auth.js';
 import { View, Image, Button, StyleSheet } from 'react-native';
-import colors from '../config/colors.js';
+import colors from '../styles/colors.js';
 
 const Header = () => {
   const { signOut } = useAuth();
