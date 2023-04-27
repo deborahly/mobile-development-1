@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
 import helpersUtils from '../utils/helpersUtils';
 import ordersUtils from '../utils/ordersUtils';
-import colors from '../config/colors';
+import CheckConfirmationForm from './CheckConfirmationForm';
+import colors from '../styles/colors';
 
 const OrderConfirmModal = ({
   modalVisible,
@@ -11,13 +12,24 @@ const OrderConfirmModal = ({
   restaurantId,
   customerId,
 }) => {
-  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [fetchResult, setFetchResult] = useState(null);
+  const [checkForm, setCheckForm] = useState([]);
 
   const handleConfirmOrder = async () => {
+    // if (checkForm.length === 0) {
+    //   console.log('checkForm empty');
+      
+    //   return;
+    // }
+
     setLoading(true);
-    const data = await ordersUtils.createOrder(restaurantId, customerId, order);
+    const data = await ordersUtils.createOrder(
+      restaurantId,
+      customerId,
+      order,
+      checkForm
+    );
     setLoading(false);
 
     if (data.id) {
@@ -75,18 +87,34 @@ const OrderConfirmModal = ({
             </View>
 
             <View>
-              <Pressable
-                style={[styles.button, styles.buttonConfirm]}
-                onPress={handleConfirmOrder}
-              >
-                {loading ? (
-                  <Text>Processing Order...</Text>
-                ) : fetchResult == 'success' ? (
-                  <Text></Text>
-                ) : (
-                  <Text>Confirm Order</Text>
-                )}
-              </Pressable>
+              {loading ? (
+                <Pressable
+                  style={[styles.button, styles.buttonConfirm]}
+                  onPress={handleConfirmOrder}
+                >
+                  <Text>Processing Order...</Text>{' '}
+                </Pressable>
+              ) : fetchResult == 'success' ? (
+                <Text></Text>
+              ) : (
+                [
+                  <Text>
+                    Would you like to receive your order confirmation by email
+                    and/or text?
+                  </Text>,
+                  <CheckConfirmationForm
+                    checkForm={checkForm}
+                    setCheckForm={setCheckForm}
+                  />,
+                  <Pressable
+                    style={[styles.button, styles.buttonConfirm]}
+                    onPress={handleConfirmOrder}
+                  >
+                    <Text>Confirm Order</Text>
+                  </Pressable>,
+                ]
+              )}
+
               {fetchResult == 'success' && (
                 <Text>Thank you! Your order has been received.</Text>
               )}
