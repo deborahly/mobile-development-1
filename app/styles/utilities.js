@@ -13,5 +13,9 @@ export default {
 
   textCenter: {
     textAlign: 'center',
-  }
+  },
+
+  marginAuto: {
+    margin: 'auto',
+  },
 };

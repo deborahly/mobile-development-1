@@ -26,4 +26,13 @@ export default {
   strong: {
     fontWeight: 600,
   },
+
+  uppercase: {
+    textTransform: 'uppercase',
+  },
+
+  regular: {
+    fontSize: '13px',
+    fontWeight: 500,
+  },
 };

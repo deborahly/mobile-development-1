@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SafeAreaView, Text, View, TouchableOpacity } from 'react-native';
 import restaurantsUtils from '../utils/restaurantsUtils';
 import helpersUtils from '../utils/helpersUtils';

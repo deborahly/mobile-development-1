@@ -152,12 +152,6 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
-  // contentBox: {
-  //   flex: 1,
-  //   gap: 10,
-  //   width: '100%',
-  // },
-
   item: {
     flex: 1,
     flexDirection: 'row',
@@ -171,19 +165,20 @@ export default StyleSheet.create({
   modalTotal: {
     marginTop: 10,
     paddingTop: 5,
-    borderTopWidth: 1
+    borderTopWidth: 1,
   },
 
   modalTotalContent: {
     alignSelf: 'end',
   },
 
-  // buttonConfirm: {
-  //   backgroundColor: colors.primary,
-  // },
-
   checkForm: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+
+  tableHead: {
+    backgroundColor: colors.black,
+    color: colors.white,
   },
 });
