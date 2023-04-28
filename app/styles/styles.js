@@ -36,6 +36,17 @@ export default StyleSheet.create({
   button: {
     borderColor: colors.primary,
     backgroundColor: colors.primary,
+    textTransform: 'uppercase',
+    fontFamily: "'oswald-regular', sans-serif",
+    fontSize: '13px',
+  },
+
+  smallButton: {
+    borderColor: colors.primary,
+    backgroundColor: colors.primary,
+    textTransform: 'uppercase',
+    fontFamily: "'oswald-regular', sans-serif",
+    fontSize: '11px',
   },
 
   toast: {
@@ -43,5 +54,28 @@ export default StyleSheet.create({
     top: 50,
     zIndex: 10,
     width: '70%',
+  },
+
+  headerContainer: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+    backgroundColor: colors.white,
+  },
+
+  headerImage: {
+    position: 'relative',
+    height: 40,
+    width: '50%',
+  },
+
+  shadowProp: {
+    shadowColor: '#171717',
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
 });
