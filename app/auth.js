@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authenticationUtils from './utils/authenticationUtils.js';
 
@@ -7,12 +7,6 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [authData, setAuthData] = useState();
   const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   //Every time the App is opened, this provider is rendered
-  //   //and call the loadStorageData function
-  //   loadStorageData();
-  // }, []);
 
   const loadStorageData = async () => {
     try {
@@ -33,6 +27,11 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async user => {
     const _authData = await authenticationUtils.login(user);
+
+    // Check if login was successfull
+    if (!_authData.success) {
+      return false;
+    }
 
     //Set the data in the context, so the App can be notified
     //and send the user to the AuthStack
@@ -56,7 +55,9 @@ export const AuthProvider = ({ children }) => {
   return (
     //This component will be used to encapsulate the whole App,
     //so all components will have access to the Context
-    <AuthContext.Provider value={{ loadStorageData, authData, loading, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ loadStorageData, authData, loading, signIn, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
