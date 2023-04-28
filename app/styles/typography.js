@@ -9,6 +9,11 @@ export default {
     fontSize: '16px',
   },
 
+  h4: {
+    fontFamily: "'oswald-medium', sans-serif",
+    fontSize: '14px',
+  },
+
   label: {
     fontSize: '12px',
   },
@@ -16,5 +21,9 @@ export default {
   detail: {
     fontFamily: "'oswald-regular', sans-serif",
     fontSize: '11px',
+  },
+
+  strong: {
+    fontWeight: 600,
   },
 };

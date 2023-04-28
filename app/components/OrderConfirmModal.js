@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
+import { useState } from 'react';
+import { Text, View } from 'react-native';
 import helpersUtils from '../utils/helpersUtils';
 import ordersUtils from '../utils/ordersUtils';
-import colors from '../styles/colors';
+import styles from '../styles/styles.js';
+import utilities from '../styles/utilities.js';
+import typography from '../styles/typography.js';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons/faCircleExclamation';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
+import CheckConfirmationForm from './CheckConfirmationForm';
 
 const OrderConfirmModal = ({
   modalVisible,
@@ -11,13 +19,18 @@ const OrderConfirmModal = ({
   restaurantId,
   customerId,
 }) => {
-  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [fetchResult, setFetchResult] = useState(null);
+  const [checkForm, setCheckForm] = useState([]);
 
   const handleConfirmOrder = async () => {
     setLoading(true);
-    const data = await ordersUtils.createOrder(restaurantId, customerId, order);
+    const data = await ordersUtils.createOrder(
+      restaurantId,
+      customerId,
+      order,
+      checkForm
+    );
     setLoading(false);
 
     if (data.id) {
@@ -30,147 +43,120 @@ const OrderConfirmModal = ({
   };
 
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType='slide'
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.headingBox}>
-              <Text style={styles.modalText}>Order Confirmation</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text>X</Text>
-              </Pressable>
-            </View>
-
-            <View style={styles.contentBox}>
-              {Object.entries(order).find(item => item[1].quantity != 0) ? (
-                [
-                  Object.entries(order).map(item => {
-                    if (item[1].quantity != 0) {
-                      return (
-                        <View style={styles.item}>
-                          <Text>{item[0]}</Text>
-                          <Text>x {item[1].quantity}</Text>
-                          <Text>$ {item[1].cost * item[1].quantity}</Text>
-                        </View>
-                      );
-                    }
-                  }),
-                  <Text style={styles.total}>
-                    Total: {helpersUtils.calculateOrder(order)}
-                  </Text>,
-                ]
-              ) : (
-                <Text>No items added</Text>
-              )}
-            </View>
-
-            <View>
-              <Pressable
-                style={[styles.button, styles.buttonConfirm]}
-                onPress={handleConfirmOrder}
-              >
-                {loading ? (
-                  <Text>Processing Order...</Text>
-                ) : fetchResult == 'success' ? (
-                  <Text></Text>
-                ) : (
-                  <Text>Confirm Order</Text>
-                )}
-              </Pressable>
-              {fetchResult == 'success' && (
-                <Text>Thank you! Your order has been received.</Text>
-              )}
-              {fetchResult == 'failed' && (
-                <Text>
-                  Your order was not processed successfully. Please try again.
-                </Text>
-              )}
-            </View>
+    <View>
+      <Modal show={modalVisible} centered={true}>
+        <Modal.Dialog>
+          <View style={styles.modalHeader}>
+            <Modal.Header
+              closeButton
+              closeVariant='white'
+              onHide={() => setModalVisible(!modalVisible)}
+            >
+              <Modal.Title style={typography.h3}>
+                Order Confirmation
+              </Modal.Title>
+            </Modal.Header>
           </View>
-        </View>
+
+          <Modal.Body>
+            <Text style={typography.h2}>Order Summary</Text>
+            {Object.entries(order).find(item => item[1].quantity != 0) ? (
+              [
+                Object.entries(order).map(item => {
+                  if (item[1].quantity != 0) {
+                    return (
+                      <View style={styles.item}>
+                        <Text>{item[0]}</Text>
+                        <Text>x {item[1].quantity}</Text>
+                        <Text>
+                          ${' '}
+                          {helpersUtils.formatCost(
+                            item[1].cost * item[1].quantity
+                          )}
+                        </Text>
+                      </View>
+                    );
+                  }
+                }),
+                <View style={styles.modalTotal}>
+                  <Text style={styles.modalTotalContent}>
+                    <span style={typography.strong}>TOTAL:</span>{' '}
+                    {helpersUtils.calculateOrder(order)}
+                  </Text>
+                </View>,
+              ]
+            ) : (
+              <Text style={utilities.textCenter}>No items added</Text>
+            )}
+          </Modal.Body>
+
+          <Modal.Footer style={styles.modalFooter}>
+            {loading ? (
+              <Button
+                as='input'
+                type='button'
+                value='Processing Order...'
+                onClick={handleConfirmOrder}
+                style={styles.modalButton}
+              />
+            ) : fetchResult == 'success' ? (
+              <Text></Text>
+            ) : (
+              [
+                <Text style={utilities.textCenter}>
+                  Would you like to receive your order confirmation by email
+                  and/or text?
+                </Text>,
+                <CheckConfirmationForm
+                  checkForm={checkForm}
+                  setCheckForm={setCheckForm}
+                />,
+                <Button
+                  as='input'
+                  type='button'
+                  value='Confirm Order'
+                  onClick={handleConfirmOrder}
+                  style={styles.modalButton}
+                />,
+              ]
+            )}
+
+            {fetchResult == 'success' && (
+              <Text>
+                <View style={styles.modalIcon}>
+                  <FontAwesomeIcon
+                    icon={faCircleCheck}
+                    style={{ color: '#609475' }}
+                  />
+                </View>
+                <View>
+                  <Text style={utilities.textCenter}>
+                    Thank you! Your order has been received.
+                  </Text>
+                </View>
+              </Text>
+            )}
+
+            {fetchResult == 'failed' && (
+              <Text>
+                <View style={styles.modalIcon}>
+                  <FontAwesomeIcon
+                    icon={faCircleExclamation}
+                    style={{ color: '#851919' }}
+                  />
+                </View>
+                <View>
+                  <Text style={utilities.textCenter}>
+                    Your order was not processed successfully. Please try again.
+                  </Text>
+                </View>
+              </Text>
+            )}
+          </Modal.Footer>
+        </Modal.Dialog>
       </Modal>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  infoBox: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'top',
-    paddingTop: 20,
-    width: '90%',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 25,
-    width: '90%',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  closeButton: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  headingBox: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    justifyContent: 'space-between',
-    alignItems: 'top',
-    width: '100%',
-  },
-  contentBox: {
-    flex: 1,
-    gap: 10,
-    width: '100%',
-  },
-  item: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 20,
-    width: '100%',
-  },
-  total: {
-    alignSelf: 'flex-end',
-  },
-  buttonConfirm: {
-    backgroundColor: colors.primary,
-  },
-});
 
 export default OrderConfirmModal;

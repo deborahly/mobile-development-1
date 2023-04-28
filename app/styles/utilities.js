@@ -6,4 +6,12 @@ export default {
   mbMedium: {
     marginBottom: 20,
   },
+
+  textRight: {
+    textAlign: 'right',
+  },
+
+  textCenter: {
+    textAlign: 'center',
+  }
 };

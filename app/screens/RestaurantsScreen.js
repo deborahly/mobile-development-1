@@ -37,7 +37,7 @@ function RestaurantsScreen(props) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.container}>
         <Container style={utilities.mbMedium}>
           <Row style={utilities.mbMedium}>

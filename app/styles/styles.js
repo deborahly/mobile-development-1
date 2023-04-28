@@ -8,7 +8,10 @@ export default StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
     padding: 20,
+    height: '100%',
   },
+
+  safeAreaView: { backgroundColor: 'white', height: '100%' },
 
   loginImage: {
     position: 'relative',
@@ -47,6 +50,15 @@ export default StyleSheet.create({
     textTransform: 'uppercase',
     fontFamily: "'oswald-regular', sans-serif",
     fontSize: '11px',
+  },
+
+  modalButton: {
+    borderColor: colors.primary,
+    backgroundColor: colors.primary,
+    textTransform: 'uppercase',
+    fontFamily: "'oswald-regular', sans-serif",
+    fontSize: '13px',
+    width: '100%',
   },
 
   select: {
@@ -97,5 +109,81 @@ export default StyleSheet.create({
     image: {
       width: '100%',
     },
+  },
+
+  productCard: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'top',
+    paddingTop: 20,
+
+    image: {
+      width: 60,
+    },
+  },
+
+  counterBox: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modalHeader: {
+    backgroundColor: colors.black,
+    color: colors.white,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+  },
+
+  modalIcon: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+
+  modalFooter: {
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'top',
+    alignItems: 'center',
+  },
+
+  // contentBox: {
+  //   flex: 1,
+  //   gap: 10,
+  //   width: '100%',
+  // },
+
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 10,
+    width: '100%',
+  },
+
+  modalTotal: {
+    marginTop: 10,
+    paddingTop: 5,
+    borderTopWidth: 1
+  },
+
+  modalTotalContent: {
+    alignSelf: 'end',
+  },
+
+  // buttonConfirm: {
+  //   backgroundColor: colors.primary,
+  // },
+
+  checkForm: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 });
