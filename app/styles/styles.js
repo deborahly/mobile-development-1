@@ -36,6 +36,12 @@ export default StyleSheet.create({
     alignItems: 'left',
   },
 
+  flexBoxRow: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+  },
+
   button: {
     borderColor: colors.primary,
     backgroundColor: colors.primary,
@@ -111,6 +117,21 @@ export default StyleSheet.create({
     },
   },
 
+  accountCard: {
+    width: '8rem',
+    boxShadow: `1px 2px 5px -3px ${colors.black}`,
+  },
+
+  userSvg: {
+    height: '70%',
+    margin: 'auto',
+    color: '#da583b',
+  },
+
+  accountSvg: {
+    height: '8rem',
+  },
+
   productCard: {
     flex: 1,
     flexDirection: 'row',
@@ -181,5 +202,4 @@ export default StyleSheet.create({
     backgroundColor: colors.black,
     color: colors.white,
   },
-
 });
