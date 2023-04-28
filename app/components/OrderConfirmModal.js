@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
 import helpersUtils from '../utils/helpersUtils';
 import ordersUtils from '../utils/ordersUtils';
-import colors from '../config/colors';
+import colors from '../styles/colors';
 
 const OrderConfirmModal = ({
   modalVisible,
