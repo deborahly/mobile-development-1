@@ -8,7 +8,7 @@ const calculateOrder = order => {
     return prev;
   }, 0);
 
-  return totalCost;
+  return formatCost(totalCost);
 };
 
 const formatDate = date => {
@@ -19,4 +19,30 @@ const formatDate = date => {
   ).slice(-2)}/${dateObject.getDate()}`;
 };
 
-export default { calculateOrder, formatDate };
+const formatCost = num => {
+  return (num / 100).toFixed(2);
+};
+
+const renderStar = number => {
+  const html = [];
+  for (let i = 0; i < number; i++) {
+    html.push(<>&#9733;</>);
+  }
+  return html;
+};
+
+const renderDollar = number => {
+  const html = [];
+  for (let i = 0; i < number; i++) {
+    html.push(<>&#36;</>);
+  }
+  return html;
+};
+
+export default {
+  calculateOrder,
+  formatDate,
+  renderStar,
+  renderDollar,
+  formatCost,
+};

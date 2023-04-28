@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Modal, Pressable } from 'react-native';
-import colors from '../config/colors';
+import colors from '../styles/colors';
 
 const OrderHistoryModal = ({ modalVisible, setModalVisible, orderToShow }) => {
   return (

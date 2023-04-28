@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Text, SafeAreaView, View, StyleSheet, Button } from 'react-native';
+import { Text, SafeAreaView, View } from 'react-native';
 import { useAuth } from '../auth';
 import restaurantsUtils from '../utils/restaurantsUtils';
 import productsUtils from '../utils/productsUtils';
+import helpersUtils from '../utils/helpersUtils';
 import ProductCard from '../components/ProductCard';
 import OrderConfirmModal from '../components/OrderConfirmModal';
-import colors from '../config/colors';
+import styles from '../styles/styles';
+import typography from '../styles/typography';
+import utilities from '../styles/utilities';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import BootstrapButton from 'react-bootstrap/Button';
 
 function RestaurantScreen({ route }) {
   const restaurantId = route.params.restaurantId;
@@ -34,40 +41,62 @@ function RestaurantScreen({ route }) {
 
   const updateOrder = change => {
     setOrder(prev => ({ ...prev, ...change }));
-    console.log(order);
   };
 
   return (
     Object.keys(selectedRestaurant).length != 0 &&
     products.length != 0 && (
-      <SafeAreaView>
-        <View>RESTAURANT MENU</View>
+      <SafeAreaView style={styles.safeAreaView}>
+        <View style={styles.container}>
+          <Container style={utilities.mbSmall}>
+            <Row style={utilities.mbMedium}>
+              <Col>
+                <Text style={typography.h2}>RESTAURANT MENU</Text>
+              </Col>
+            </Row>
 
-        <View style={styles.infoBox}>
-          <View>
-            <Text>{selectedRestaurant.name}</Text>
-            <Text>Price: {selectedRestaurant.price_range}</Text>
-            <Text>Rating: {selectedRestaurant.rating || '-'}</Text>
-          </View>
+            <Row>
+              <Col>
+                <View>
+                  <Text style={typography.h2}>{selectedRestaurant.name}</Text>
+                  <Text style={typography.strong}>
+                    Price:&nbsp;
+                    {helpersUtils.renderDollar(selectedRestaurant.price_range)}
+                  </Text>
+                  <Text style={typography.strong}>
+                    Rating:&nbsp;
+                    {selectedRestaurant.rating
+                      ? helpersUtils.renderStar(selectedRestaurant.rating)
+                      : '-'}
+                  </Text>
+                </View>
+              </Col>
 
-          <View>
-            <Button
-              onPress={() => setModalVisible(true)}
-              color={colors.primary}
-              title='Create Order'
-              accessibilityLabel='Submit create order'
-            />
-          </View>
-        </View>
+              <Col style={utilities.textRight}>
+                <BootstrapButton
+                  as='input'
+                  type='button'
+                  value='Create Order'
+                  onClick={() => setModalVisible(true)}
+                  style={styles.smallButton}
+                />
+              </Col>
+            </Row>
+          </Container>
 
-        <View>
-          {products.map(product => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              updateOrder={updateOrder}
-            />
-          ))}
+          <Container>
+            {products.map(product => (
+              <Row>
+                <Col>
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    updateOrder={updateOrder}
+                  />
+                </Col>
+              </Row>
+            ))}
+          </Container>
         </View>
 
         <OrderConfirmModal
@@ -81,18 +110,5 @@ function RestaurantScreen({ route }) {
     )
   );
 }
-
-const styles = StyleSheet.create({
-  infoBox: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'top',
-    padding: 20,
-    width: '90%',
-  },
-});
 
 export default RestaurantScreen;

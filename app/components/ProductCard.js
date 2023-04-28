@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
-import colors from '../config/colors';
+import { Text, View, Image } from 'react-native';
+import styles from '../styles/styles';
+import typography from '../styles/typography';
+import helpersUtils from '../utils/helpersUtils';
+import utilities from '../styles/utilities';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus';
+import { faCircleMinus } from '@fortawesome/free-solid-svg-icons/faCircleMinus';
 
 function ProductCard({ product, updateOrder }) {
   const [productCount, setProductCount] = useState(0);
@@ -28,54 +34,31 @@ function ProductCard({ product, updateOrder }) {
   };
 
   return (
-    <View style={styles.card}>
+    <View style={styles.productCard}>
       <Image
-        style={styles.image}
+        style={styles.productCard.image}
         source={require('../assets/RestaurantMenu.jpg')}
       />
 
       <View>
-        <Text>{product.name}</Text>
-        <Text>{product.cost}</Text>
+        <Text style={typography.h4}>{product.name}</Text>
+        <Text style={typography.strong}>
+          $ {helpersUtils.formatCost(product.cost)}
+        </Text>
         <Text>Lorem ipsum dolor sit amet.</Text>
       </View>
 
-      <View style={styles.counter}>
-        <Text onPress={removeItem}>-</Text>
+      <View style={styles.counterBox}>
+        <Text onPress={removeItem}>
+          <FontAwesomeIcon icon={faCircleMinus} />
+        </Text>
         <Text>{productCount}</Text>
-        <Text onPress={addItem}>+</Text>
+        <Text onPress={addItem}>
+          <FontAwesomeIcon icon={faCirclePlus} />
+        </Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  card: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'top',
-    paddingTop: 20,
-    width: '90%',
-  },
-  image: {
-    width: 50,
-  },
-  counter: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default ProductCard;

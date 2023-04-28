@@ -1,22 +1,31 @@
-import React from 'react';
+import { useState } from 'react';
 import { useAuth } from '../auth.js';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  SafeAreaView,
-  TextInput,
-  Button,
-} from 'react-native';
-import colors from '../config/colors.js';
+import { Text, View, Image, SafeAreaView } from 'react-native';
+import styles from '../styles/styles.js';
+import utilities from '../styles/utilities.js';
+import typography from '../styles/typography.js';
+import Form from 'react-bootstrap/Form';
+import BootstrapButton from 'react-bootstrap/Button';
+import BasicToast from '../components/BasicToast.js';
 
 const LoginScreen = () => {
-  const [form, setForm] = React.useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [toast, setToast] = useState({ title: '', message: '', show: false });
   const { signIn } = useAuth();
 
   const handleChangeText = value => {
     return setForm(prev => ({ ...prev, ...value }));
+  };
+
+  const handleSignIn = async form => {
+    const userSignedIn = await signIn(form);
+    if (userSignedIn === false) {
+      return setToast({
+        title: 'Error',
+        message: 'Invalid email or password. Please, try again.',
+        show: true,
+      });
+    }
   };
 
   return (
@@ -25,56 +34,47 @@ const LoginScreen = () => {
         style={styles.loginImage}
         source={require('../assets/AppLogoV2.png')}
       />
-      <View style={styles.formBox}>
-        <Text>Welcome Back!</Text>
-        <Text>Login to begin</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={text => handleChangeText({ email: text })}
-          value={form.email}
-          placeholder='Email'
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={text => handleChangeText({ password: text })}
-          value={form.password}
-          placeholder='Password'
-        />
-        <Button
-          onPress={() => signIn(form)}
-          title='Log In'
-          color={colors.primary}
-          accessibilityLabel='Submit log in form'
-        />
+
+      <View style={styles.box}>
+        <View style={styles.boxContent}>
+          <Text style={typography.h2}>Welcome Back!</Text>
+          <Text style={utilities.mbSmall}>Login to begin</Text>
+          
+          <Form>
+            <Form.Group style={utilities.mbSmall}>
+              <Form.Label style={typography.label}>Email</Form.Label>
+              <Form.Control
+                type='email'
+                placeholder='Enter your primary email here'
+                onInput={e => handleChangeText({ email: e.target.value })}
+                value={form.email}
+              />
+            </Form.Group>
+
+            <Form.Group style={utilities.mbMedium}>
+              <Form.Label style={typography.label}>Email</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='**********'
+                onInput={e => handleChangeText({ password: e.target.value })}
+                value={form.password}
+              />
+            </Form.Group>
+          </Form>
+
+          <BootstrapButton
+            as='input'
+            type='button'
+            value='Log In'
+            onClick={() => handleSignIn(form)}
+            style={styles.button}
+          />
+        </View>
       </View>
+
+      <BasicToast toast={toast} setToast={setToast} />
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loginImage: {
-    position: 'relative',
-    height: 130,
-    width: '75%',
-  },
-  formBox: {
-    border: '1px solid black',
-    borderRadius: 5,
-    height: '30%',
-    width: '75%',
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
 
 export default LoginScreen;
