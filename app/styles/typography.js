@@ -1,3 +1,5 @@
+import colors from './colors';
+
 export default {
   h2: {
     fontFamily: "'oswald-medium', sans-serif",
@@ -34,5 +36,13 @@ export default {
   regular: {
     fontSize: '13px',
     fontWeight: 500,
+  },
+
+  colorWhite: {
+    color: colors.white,
+  },
+
+  colorPrimary: {
+    color: colors.primary,
   },
 };

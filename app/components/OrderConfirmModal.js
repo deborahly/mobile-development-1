@@ -67,9 +67,9 @@ const OrderConfirmModal = ({
                     return (
                       <View style={styles.item}>
                         <Text>{item[0]}</Text>
-                        <Text>x {item[1].quantity}</Text>
+                        <Text>x&nbsp;{item[1].quantity}</Text>
                         <Text>
-                          ${' '}
+                          $&nbsp;
                           {helpersUtils.formatCost(
                             item[1].cost * item[1].quantity
                           )}
@@ -80,7 +80,7 @@ const OrderConfirmModal = ({
                 }),
                 <View style={styles.modalTotal}>
                   <Text style={styles.modalTotalContent}>
-                    <span style={typography.strong}>TOTAL:</span>{' '}
+                    <span style={typography.strong}>TOTAL:</span>&nbsp;
                     {helpersUtils.calculateOrder(order)}
                   </Text>
                 </View>,

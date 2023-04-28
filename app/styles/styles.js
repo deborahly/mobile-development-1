@@ -181,4 +181,5 @@ export default StyleSheet.create({
     backgroundColor: colors.black,
     color: colors.white,
   },
+
 });
