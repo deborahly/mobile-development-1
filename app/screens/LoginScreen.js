@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '../auth.js';
-import { Text, View, Image, SafeAreaView, Button } from 'react-native';
+import { Text, View, Image, SafeAreaView } from 'react-native';
 import styles from '../styles/styles.js';
 import utilities from '../styles/utilities.js';
-import colors from '../styles/colors.js';
 import typography from '../styles/typography.js';
 import Form from 'react-bootstrap/Form';
 import BootstrapButton from 'react-bootstrap/Button';
@@ -35,10 +34,12 @@ const LoginScreen = () => {
         style={styles.loginImage}
         source={require('../assets/AppLogoV2.png')}
       />
+
       <View style={styles.box}>
         <View style={styles.boxContent}>
           <Text style={typography.h2}>Welcome Back!</Text>
           <Text style={utilities.mbSmall}>Login to begin</Text>
+          
           <Form>
             <Form.Group style={utilities.mbSmall}>
               <Form.Label style={typography.label}>Email</Form.Label>
@@ -64,7 +65,7 @@ const LoginScreen = () => {
           <BootstrapButton
             as='input'
             type='button'
-            value='Submit'
+            value='Log In'
             onClick={() => handleSignIn(form)}
             style={styles.button}
           />
