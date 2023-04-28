@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { SafeAreaView, Text, View, TouchableOpacity } from 'react-native';
 import restaurantsUtils from '../utils/restaurantsUtils';
-import colors from '../styles/colors';
-import Card from 'react-bootstrap/Card';
+import helpersUtils from '../utils/helpersUtils';
+import RestaurantCard from '../components/RestaurantCard';
+import styles from '../styles/styles';
+import typography from '../styles/typography';
+import utilities from '../styles/utilities';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
 function RestaurantsScreen(props) {
   const [form, setForm] = useState({ rating: '', price_range: '' });
   const [restaurants, setRestaurants] = useState([]);
+
+  function sliceIntoChunks(arr, chunkSize) {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      const chunk = arr.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
+  }
 
   useEffect(() => {
     const getFilteredRestaurants = async () => {
@@ -28,92 +37,101 @@ function RestaurantsScreen(props) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>Nearby Restaurants</View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Container style={utilities.mbMedium}>
+          <Row style={utilities.mbMedium}>
+            <Col>
+              <Text style={typography.h2}>NEARBY RESTAURANTS</Text>
+            </Col>
+          </Row>
 
-      <View>
-        <Picker
-          // style={styles.input}
-          selectedValue={form.rating}
-          onValueChange={value => handleValueChange({ rating: value })}
-        >
-          <Picker.Item label='--Select--' value='' />
-          <Picker.Item label='1' value='1' />
-          <Picker.Item label='2' value='2' />
-          <Picker.Item label='3' value='3' />
-          <Picker.Item label='4' value='4' />
-          <Picker.Item label='5' value='5' />
-        </Picker>
-        <Picker
-          // style={styles.input}
-          selectedValue={form.price_range}
-          onValueChange={value => handleValueChange({ price_range: value })}
-        >
-          <Picker.Item label='--Select--' value='' />
-          <Picker.Item label='1' value='1' />
-          <Picker.Item label='2' value='2' />
-          <Picker.Item label='3' value='3' />
-        </Picker>
-      </View>
+          <Row>
+            <Col>
+              <View>
+                <Text style={typography.h2}>Rating</Text>
+              </View>
 
-      <View style={styles.restaurants}>
-        {!restaurants.error && restaurants.length != 0 &&
-          restaurants.map(restaurant => (
-            <TouchableOpacity
-              key={restaurant.name}
-              onPress={() =>
-                props.navigation.navigate('Restaurant', {
-                  restaurantId: restaurant.id,
-                })
-              }
-            >
-              <Card
-                style={{
-                  width: '7rem',
-                  border: '1px solid black',
-                  minHeight: '10rem',
-                }}
+              <Form.Select
+                aria-label='Select rating'
+                style={styles.select}
+                value={form.rating}
+                onChange={e => handleValueChange({ rating: e.target.value })}
               >
-                <Card.Img
-                  variant='top'
-                  src={require('../assets/images/cuisineGreek.jpg')}
-                  style={{ width: '7rem' }}
-                />
-                <Card.Body>
-                  <Card.Title>{restaurant.name}</Card.Title>
-                  <Card.Text>
-                    <Text>
-                      Rating: {restaurant.rating}
-                      {'\n'}
-                    </Text>
-                    <Text>Price: {restaurant.price_range}</Text>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </TouchableOpacity>
-          ))}
+                <option>--Select--</option>
+                <option value='1'>{helpersUtils.renderStar(1)}</option>
+                <option value='2'>{helpersUtils.renderStar(2)}</option>
+                <option value='3'>{helpersUtils.renderStar(3)}</option>
+                <option value='4'>{helpersUtils.renderStar(4)}</option>
+                <option value='5'>{helpersUtils.renderStar(5)}</option>
+              </Form.Select>
+            </Col>
+
+            <Col>
+              <View>
+                <Text style={typography.h2}>Price</Text>
+              </View>
+
+              <Form.Select
+                aria-label='Select price range'
+                style={styles.select}
+                value={form.price_range}
+                onChange={e =>
+                  handleValueChange({ price_range: e.target.value })
+                }
+              >
+                <option>--Select--</option>
+                <option value='1'>{helpersUtils.renderDollar(1)}</option>
+                <option value='2'>{helpersUtils.renderDollar(2)}</option>
+                <option value='3'>{helpersUtils.renderDollar(3)}</option>
+              </Form.Select>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container>
+          <Row style={utilities.mbMedium}>
+            <Col>
+              <Text style={typography.h2}>RESTAURANTS</Text>
+            </Col>
+          </Row>
+
+          {!restaurants.error &&
+            restaurants.length != 0 &&
+            sliceIntoChunks(restaurants, 2).map((restaurantChunk, i) => (
+              <Row key={i} style={utilities.mbMedium}>
+                <Col>
+                  <TouchableOpacity
+                    key={restaurantChunk[0].name}
+                    onPress={() =>
+                      props.navigation.navigate('Restaurant', {
+                        restaurantId: restaurantChunk[0].id,
+                      })
+                    }
+                  >
+                    <RestaurantCard restaurant={restaurantChunk[0]} />
+                  </TouchableOpacity>
+                </Col>
+                <Col>
+                  {restaurantChunk[1] && (
+                    <TouchableOpacity
+                      key={restaurantChunk[1].name}
+                      onPress={() =>
+                        props.navigation.navigate('Restaurant', {
+                          restaurantId: restaurantChunk[1].id,
+                        })
+                      }
+                    >
+                      <RestaurantCard restaurant={restaurantChunk[1]} />
+                    </TouchableOpacity>
+                  )}
+                </Col>
+              </Row>
+            ))}
+        </Container>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  restaurants: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: 10,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'top',
-    paddingTop: 20,
-    width: '90%',
-  },
-});
 
 export default RestaurantsScreen;

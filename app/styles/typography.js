@@ -4,6 +4,11 @@ export default {
     fontSize: '18px',
   },
 
+  h3: {
+    fontFamily: "'oswald-regular', sans-serif",
+    fontSize: '16px',
+  },
+
   label: {
     fontSize: '12px',
   },

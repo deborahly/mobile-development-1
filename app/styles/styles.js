@@ -6,8 +6,8 @@ export default StyleSheet.create({
     position: 'relative',
     flex: 1,
     backgroundColor: colors.white,
-    // justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
 
   loginImage: {
@@ -49,6 +49,15 @@ export default StyleSheet.create({
     fontSize: '11px',
   },
 
+  select: {
+    borderColor: colors.primary,
+    backgroundColor: colors.primary,
+    color: colors.white,
+    textAlign: 'center',
+    padding: 2,
+    margin: '0 auto',
+  },
+
   toast: {
     position: 'absolute',
     top: 50,
@@ -77,5 +86,16 @@ export default StyleSheet.create({
     shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
+  },
+
+  restaurantCard: {
+    width: '100%',
+    height: 200,
+    borderRadius: 5,
+    boxShadow: `1px 2px 5px -3px ${colors.black}`,
+
+    image: {
+      width: '100%',
+    },
   },
 });

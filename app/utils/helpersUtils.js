@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlassPlus';
+
 const calculateOrder = order => {
   const totalCost = Object.entries(order).reduce((prev, curr) => {
     if (curr[1].quantity != 0) {
@@ -19,4 +22,20 @@ const formatDate = date => {
   ).slice(-2)}/${dateObject.getDate()}`;
 };
 
-export default { calculateOrder, formatDate };
+const renderStar = number => {
+  const html = [];
+  for (let i = 0; i < number; i++) {
+    html.push(<>&#9733;</>);
+  }
+  return html;
+};
+
+const renderDollar = number => {
+  const html = [];
+  for (let i = 0; i < number; i++) {
+    html.push(<>&#36;</>);
+  }
+  return html;
+};
+
+export default { calculateOrder, formatDate, renderStar, renderDollar };
