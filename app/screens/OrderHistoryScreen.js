@@ -51,14 +51,11 @@ function OrderHistoryScreen() {
             {orders.length !== 0 &&
               orders.map(order => {
                 return (
-                  <tr>
+                  <tr key={order.id}>
                     <td>{order.restaurant_name}</td>
                     <td style={typography.uppercase}>{order.status}</td>
                     <td>
-                      <TouchableOpacity
-                        key={order.id}
-                        onPress={() => handleShowModal(order)}
-                      >
+                      <TouchableOpacity onPress={() => handleShowModal(order)}>
                         <FontAwesomeIcon
                           icon={faMagnifyingGlassPlus}
                           style={utilities.marginAuto}
