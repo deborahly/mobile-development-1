@@ -60,8 +60,13 @@ const OrderHistoryModal = ({ modalVisible, setModalVisible, orderToShow }) => {
                   );
                 }),
               <View style={styles.modalTotal}>
-                <Text style={styles.modalTotalContent}>
-                  <span style={typography.strong}>TOTAL:</span>&nbsp;
+                <Text
+                  style={StyleSheet.flatten([
+                    styles.modalTotalContent,
+                    typography.strong,
+                  ])}
+                >
+                  TOTAL:&nbsp;$
                   {helpersUtils.formatCost(orderToShow.total)}
                 </Text>
               </View>,
