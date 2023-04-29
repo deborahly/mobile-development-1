@@ -13,6 +13,7 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
 import CheckConfirmationForm from './CheckConfirmationForm';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import BasicToast from '../components/BasicToast.js';
 
 const OrderConfirmModal = ({
   modalVisible,
@@ -24,8 +25,17 @@ const OrderConfirmModal = ({
   const [loading, setLoading] = useState(false);
   const [fetchResult, setFetchResult] = useState(null);
   const [checkForm, setCheckForm] = useState([]);
+  const [toast, setToast] = useState({ title: '', message: '', show: false });
 
   const handleConfirmOrder = async () => {
+    if (checkForm.length === 0) {
+      return setToast({
+        title: 'Error',
+        message: 'Please check at least one notification type.',
+        show: true,
+      });
+    }
+
     setLoading(true);
     const data = await ordersUtils.createOrder(
       restaurantId,
@@ -168,6 +178,7 @@ const OrderConfirmModal = ({
             )}
           </Modal.Footer>
         </Modal.Dialog>
+        <BasicToast toast={toast} setToast={setToast} />
       </Modal>
     </View>
   );

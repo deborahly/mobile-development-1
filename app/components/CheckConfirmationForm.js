@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Pressable, View } from 'react-native';
-import utilities from '../styles/utilities';
 import styles from '../styles/styles';
 
 const CheckConfirmationForm = ({ checkForm, setCheckForm }) => {
