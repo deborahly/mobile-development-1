@@ -4,8 +4,6 @@ import styles from '../styles/styles.js';
 import utilities from '../styles/utilities.js';
 import typography from '../styles/typography.js';
 import Modal from 'react-bootstrap/Modal';
-import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 

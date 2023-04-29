@@ -1,11 +1,11 @@
 import { Text, View, StyleSheet } from 'react-native';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import colors from '../styles/colors';
 import styles from '../styles/styles.js';
-import utilities from '../styles/utilities.js';
 import typography from '../styles/typography.js';
 import helpersUtils from '../utils/helpersUtils';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import utilities from '../styles/utilities.js';
 
 const OrderHistoryModal = ({ modalVisible, setModalVisible, orderToShow }) => {
   return (
@@ -48,15 +48,17 @@ const OrderHistoryModal = ({ modalVisible, setModalVisible, orderToShow }) => {
           <Modal.Body>
             {[
               orderToShow.products &&
-                orderToShow.products.map(item => {
+                orderToShow.products.map((item, i) => {
                   return (
-                    <View style={styles.item}>
-                      <Text>{item.product_name}</Text>
-                      <Text>x&nbsp;{item.quantity}</Text>
-                      <Text>
+                    <Row style={typography.medium} key={i}>
+                      <Col>{item.product_name}</Col>
+                      <Col style={utilities.textRight}>
+                        x&nbsp;{item.quantity}
+                      </Col>
+                      <Col style={utilities.textRight}>
                         $&nbsp;{helpersUtils.formatCost(item.total_cost)}
-                      </Text>
-                    </View>
+                      </Col>
+                    </Row>
                   );
                 }),
               <View style={styles.modalTotal}>
