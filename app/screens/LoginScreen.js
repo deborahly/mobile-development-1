@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../auth.js';
-import { Text, View, Image, SafeAreaView } from 'react-native';
+import { Text, View, Image, SafeAreaView, StyleSheet } from 'react-native';
 import styles from '../styles/styles.js';
 import utilities from '../styles/utilities.js';
 import typography from '../styles/typography.js';
@@ -67,7 +67,7 @@ const LoginScreen = () => {
             type='button'
             value='Log In'
             onClick={() => handleSignIn(form)}
-            style={styles.button}
+            style={StyleSheet.flatten([styles.button, utilities.width100])}
           />
         </View>
       </View>

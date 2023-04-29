@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import helpersUtils from '../utils/helpersUtils';
 import ordersUtils from '../utils/ordersUtils';
 import styles from '../styles/styles.js';
@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons/faCircleExclamation';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
 import CheckConfirmationForm from './CheckConfirmationForm';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import BasicToast from '../components/BasicToast.js';
 
 const OrderConfirmModal = ({
   modalVisible,
@@ -22,8 +25,17 @@ const OrderConfirmModal = ({
   const [loading, setLoading] = useState(false);
   const [fetchResult, setFetchResult] = useState(null);
   const [checkForm, setCheckForm] = useState([]);
+  const [toast, setToast] = useState({ title: '', message: '', show: false });
 
   const handleConfirmOrder = async () => {
+    if (checkForm.length === 0) {
+      return setToast({
+        title: 'Error',
+        message: 'Please check at least one notification type.',
+        show: true,
+      });
+    }
+
     setLoading(true);
     const data = await ordersUtils.createOrder(
       restaurantId,
@@ -62,25 +74,32 @@ const OrderConfirmModal = ({
             <Text style={typography.h2}>Order Summary</Text>
             {Object.entries(order).find(item => item[1].quantity != 0) ? (
               [
-                Object.entries(order).map(item => {
+                Object.entries(order).map((item, i) => {
                   if (item[1].quantity != 0) {
                     return (
-                      <View style={styles.item}>
-                        <Text>{item[0]}</Text>
-                        <Text>x {item[1].quantity}</Text>
-                        <Text>
-                          ${' '}
+                      <Row style={typography.medium} key={i}>
+                        <Col>{item[0]}</Col>
+                        <Col style={utilities.textRight}>
+                          x&nbsp;{item[1].quantity}
+                        </Col>
+                        <Col style={utilities.textRight}>
+                          $&nbsp;
                           {helpersUtils.formatCost(
                             item[1].cost * item[1].quantity
                           )}
-                        </Text>
-                      </View>
+                        </Col>
+                      </Row>
                     );
                   }
                 }),
                 <View style={styles.modalTotal}>
-                  <Text style={styles.modalTotalContent}>
-                    <span style={typography.strong}>TOTAL:</span>{' '}
+                  <Text
+                    style={StyleSheet.flatten([
+                      styles.modalTotalContent,
+                      typography.strong,
+                    ])}
+                  >
+                    TOTAL:&nbsp;$
                     {helpersUtils.calculateOrder(order)}
                   </Text>
                 </View>,
@@ -97,7 +116,7 @@ const OrderConfirmModal = ({
                 type='button'
                 value='Processing Order...'
                 onClick={handleConfirmOrder}
-                style={styles.modalButton}
+                style={StyleSheet.flatten([styles.button, utilities.width100])}
               />
             ) : fetchResult == 'success' ? (
               <Text></Text>
@@ -116,7 +135,10 @@ const OrderConfirmModal = ({
                   type='button'
                   value='Confirm Order'
                   onClick={handleConfirmOrder}
-                  style={styles.modalButton}
+                  style={StyleSheet.flatten([
+                    styles.button,
+                    utilities.width100,
+                  ])}
                 />,
               ]
             )}
@@ -127,6 +149,7 @@ const OrderConfirmModal = ({
                   <FontAwesomeIcon
                     icon={faCircleCheck}
                     style={{ color: '#609475' }}
+                    size='sm'
                   />
                 </View>
                 <View>
@@ -143,6 +166,7 @@ const OrderConfirmModal = ({
                   <FontAwesomeIcon
                     icon={faCircleExclamation}
                     style={{ color: '#851919' }}
+                    size='sm'
                   />
                 </View>
                 <View>
@@ -154,6 +178,7 @@ const OrderConfirmModal = ({
             )}
           </Modal.Footer>
         </Modal.Dialog>
+        <BasicToast toast={toast} setToast={setToast} />
       </Modal>
     </View>
   );

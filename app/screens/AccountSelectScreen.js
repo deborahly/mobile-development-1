@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react';
-import { View, SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import Card from 'react-bootstrap/Card';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faCar } from '@fortawesome/free-solid-svg-icons/faCar';
+import styles from '../styles/styles';
+import utilities from '../styles/utilities';
 
 function AccountSelectScreen(props) {
   return (
-    <SafeAreaView>
-      <View>
+    <SafeAreaView style={styles.container}>
+      <Image
+        style={styles.loginImage}
+        source={require('../assets/AppLogoV2.png')}
+      />
+
+      <View style={styles.flexBoxRow}>
         <TouchableOpacity
           key='customer-app'
           onPress={() =>
@@ -14,20 +23,16 @@ function AccountSelectScreen(props) {
             })
           }
         >
-          <Card
-            style={{
-              width: '7rem',
-              border: '1px solid black',
-              minHeight: '10rem',
-            }}
-          >
-            <Card.Img
-              variant='top'
-              src={require('../assets/images/cuisineGreek.jpg')}
-              style={{ width: '7rem' }}
-            />
+          <Card style={styles.accountCard}>
             <Card.Body>
-              <Card.Title>Customer</Card.Title>
+              <View style={styles.accountSvg}>
+                <FontAwesomeIcon
+                  icon={faUser}
+                  size='sm'
+                  style={styles.userSvg}
+                />
+              </View>
+              <Card.Title style={utilities.textCenter}>Customer</Card.Title>
             </Card.Body>
           </Card>
         </TouchableOpacity>
@@ -40,20 +45,16 @@ function AccountSelectScreen(props) {
             })
           }
         >
-          <Card
-            style={{
-              width: '7rem',
-              border: '1px solid black',
-              minHeight: '10rem',
-            }}
-          >
-            <Card.Img
-              variant='top'
-              src={require('../assets/images/cuisineGreek.jpg')}
-              style={{ width: '7rem' }}
-            />
+          <Card style={styles.accountCard}>
             <Card.Body>
-              <Card.Title>Courier</Card.Title>
+              <View style={styles.accountSvg}>
+                <FontAwesomeIcon
+                  icon={faCar}
+                  style={{ color: '#222126' }}
+                  size='sm'
+                />
+              </View>
+              <Card.Title style={utilities.textCenter}>Courier</Card.Title>
             </Card.Body>
           </Card>
         </TouchableOpacity>

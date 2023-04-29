@@ -13,5 +13,17 @@ export default {
 
   textCenter: {
     textAlign: 'center',
-  }
+  },
+
+  marginAuto: {
+    margin: 'auto',
+  },
+
+  width100: {
+    width: '100%',
+  },
+
+  verticalMiddle: {
+    verticalAlign: 'middle',
+  },
 };

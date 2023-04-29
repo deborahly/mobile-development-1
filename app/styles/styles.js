@@ -36,6 +36,12 @@ export default StyleSheet.create({
     alignItems: 'left',
   },
 
+  flexBoxRow: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+  },
+
   button: {
     borderColor: colors.primary,
     backgroundColor: colors.primary,
@@ -50,6 +56,38 @@ export default StyleSheet.create({
     textTransform: 'uppercase',
     fontFamily: "'oswald-regular', sans-serif",
     fontSize: '11px',
+  },
+
+  testButton: status => {
+    if (status === 'pending') {
+      return {
+        borderColor: colors.red,
+        backgroundColor: colors.red,
+        textTransform: 'uppercase',
+        fontFamily: "'oswald-regular', sans-serif",
+        fontSize: '11px',
+      };
+    }
+
+    if (status === 'in progress') {
+      return {
+        borderColor: colors.primary,
+        backgroundColor: colors.primary,
+        textTransform: 'uppercase',
+        fontFamily: "'oswald-regular', sans-serif",
+        fontSize: '11px',
+      };
+    }
+
+    if (status === 'delivered') {
+      return {
+        borderColor: 'rgba(96, 148, 117, 0.7)',
+        backgroundColor: 'rgba(96, 148, 117, 0.7)',
+        textTransform: 'uppercase',
+        fontFamily: "'oswald-regular', sans-serif",
+        fontSize: '11px',
+      };
+    }
   },
 
   modalButton: {
@@ -72,9 +110,11 @@ export default StyleSheet.create({
 
   toast: {
     position: 'absolute',
-    top: 50,
     zIndex: 10,
     width: '70%',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   },
 
   headerContainer: {
@@ -111,6 +151,21 @@ export default StyleSheet.create({
     },
   },
 
+  accountCard: {
+    width: '8rem',
+    boxShadow: `1px 2px 5px -3px ${colors.black}`,
+  },
+
+  userSvg: {
+    height: '70%',
+    margin: 'auto',
+    color: '#da583b',
+  },
+
+  accountSvg: {
+    height: '8rem',
+  },
+
   productCard: {
     flex: 1,
     flexDirection: 'row',
@@ -143,6 +198,8 @@ export default StyleSheet.create({
   modalIcon: {
     display: 'flex',
     alignItems: 'center',
+    paddingBottom: '0.5rem',
+    height: '3rem',
   },
 
   modalFooter: {
@@ -151,12 +208,6 @@ export default StyleSheet.create({
     justifyContent: 'top',
     alignItems: 'center',
   },
-
-  // contentBox: {
-  //   flex: 1,
-  //   gap: 10,
-  //   width: '100%',
-  // },
 
   item: {
     flex: 1,
@@ -171,19 +222,27 @@ export default StyleSheet.create({
   modalTotal: {
     marginTop: 10,
     paddingTop: 5,
-    borderTopWidth: 1
+    borderTopWidth: 1,
   },
 
   modalTotalContent: {
     alignSelf: 'end',
   },
 
-  // buttonConfirm: {
-  //   backgroundColor: colors.primary,
-  // },
-
   checkForm: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+
+  tableHead: {
+    backgroundColor: colors.black,
+    color: colors.white,
+  },
+
+  bottomTabIcon: {
+    backgroundColor: colors.purple,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 25,
   },
 });
