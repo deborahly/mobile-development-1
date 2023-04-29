@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import helpersUtils from '../utils/helpersUtils';
 import ordersUtils from '../utils/ordersUtils';
 import styles from '../styles/styles.js';
@@ -97,7 +97,7 @@ const OrderConfirmModal = ({
                 type='button'
                 value='Processing Order...'
                 onClick={handleConfirmOrder}
-                style={styles.modalButton}
+                style={StyleSheet.flatten([styles.button, utilities.width100])}
               />
             ) : fetchResult == 'success' ? (
               <Text></Text>
@@ -116,7 +116,10 @@ const OrderConfirmModal = ({
                   type='button'
                   value='Confirm Order'
                   onClick={handleConfirmOrder}
-                  style={styles.modalButton}
+                  style={StyleSheet.flatten([
+                    styles.button,
+                    utilities.width100,
+                  ])}
                 />,
               ]
             )}

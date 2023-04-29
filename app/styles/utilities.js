@@ -18,4 +18,8 @@ export default {
   marginAuto: {
     margin: 'auto',
   },
+
+  width100: {
+    width: '100%',
+  },
 };
