@@ -38,6 +38,11 @@ export default {
     fontWeight: 500,
   },
 
+  regularOswald: {
+    fontFamily: "'oswald-regular', sans-serif",
+    fontSize: '13px',
+  },
+
   colorWhite: {
     color: colors.white,
   },

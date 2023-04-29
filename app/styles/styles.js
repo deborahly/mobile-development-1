@@ -58,6 +58,38 @@ export default StyleSheet.create({
     fontSize: '11px',
   },
 
+  testButton: status => {
+    if (status === 'pending') {
+      return {
+        borderColor: colors.red,
+        backgroundColor: colors.red,
+        textTransform: 'uppercase',
+        fontFamily: "'oswald-regular', sans-serif",
+        fontSize: '11px',
+      };
+    }
+
+    if (status === 'in progress') {
+      return {
+        borderColor: colors.primary,
+        backgroundColor: colors.primary,
+        textTransform: 'uppercase',
+        fontFamily: "'oswald-regular', sans-serif",
+        fontSize: '11px',
+      };
+    }
+
+    if (status === 'delivered') {
+      return {
+        borderColor: 'rgba(96, 148, 117, 0.7)',
+        backgroundColor: 'rgba(96, 148, 117, 0.7)',
+        textTransform: 'uppercase',
+        fontFamily: "'oswald-regular', sans-serif",
+        fontSize: '11px',
+      };
+    }
+  },
+
   modalButton: {
     borderColor: colors.primary,
     backgroundColor: colors.primary,

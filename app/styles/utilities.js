@@ -22,4 +22,8 @@ export default {
   width100: {
     width: '100%',
   },
+
+  verticalMiddle: {
+    verticalAlign: 'middle',
+  },
 };
