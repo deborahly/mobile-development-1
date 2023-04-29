@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import { useAuth } from '../auth';
 import CourierOrderModal from '../components/CourierOrderModal';
 import ordersUtils from '../utils/ordersUtils';
@@ -46,69 +52,76 @@ const DeliveriesScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <Container style={styles.container}>
-        <Row style={utilities.mbMedium}>
-          <Col>
-            <Text style={typography.h2}>MY DELIVERIES</Text>
-          </Col>
-        </Row>
+      <ScrollView>
+        <Container style={styles.container}>
+          <Row style={utilities.mbMedium}>
+            <Col>
+              <Text style={typography.h2}>MY DELIVERIES</Text>
+            </Col>
+          </Row>
 
-        <Table
-          borderless
-          hover
-          style={StyleSheet.flatten([utilities.textCenter, typography.regular])}
-        >
-          <thead
+          <Table
+            borderless
+            hover
             style={StyleSheet.flatten([
-              styles.tableHead,
-              utilities.verticalMiddle,
+              utilities.textCenter,
+              typography.regular,
             ])}
           >
-            <tr>
-              <th>ORDER ID</th>
-              <th>ADDRESS</th>
-              <th>STATUS</th>
-              <th>VIEW</th>
-            </tr>
-          </thead>
-          <tbody
-            style={StyleSheet.flatten([
-              utilities.verticalMiddle,
-              typography.regularOswald,
-            ])}
-          >
-            {orders.length !== 0 &&
-              orders.map((order, i) => {
-                return (
-                  <tr key={order.id}>
-                    <td>{order.id}</td>
-                    <td>{order.customer_address}</td>
-                    <td>
-                      <Button
-                        as='input'
-                        type='button'
-                        value={order.status}
-                        onClick={() => handleChangeStatus(order, i)}
-                        style={StyleSheet.flatten([
-                          styles.testButton(order.status),
-                          utilities.width100,
-                        ])}
-                      />
-                    </td>
-                    <td>
-                      <TouchableOpacity onPress={() => handleShowModal(order)}>
-                        <FontAwesomeIcon
-                          icon={faMagnifyingGlassPlus}
-                          style={utilities.marginAuto}
+            <thead
+              style={StyleSheet.flatten([
+                styles.tableHead,
+                utilities.verticalMiddle,
+              ])}
+            >
+              <tr>
+                <th>ORDER ID</th>
+                <th>ADDRESS</th>
+                <th>STATUS</th>
+                <th>VIEW</th>
+              </tr>
+            </thead>
+            <tbody
+              style={StyleSheet.flatten([
+                utilities.verticalMiddle,
+                typography.regularOswald,
+              ])}
+            >
+              {orders.length !== 0 &&
+                orders.map((order, i) => {
+                  return (
+                    <tr key={order.id}>
+                      <td>{order.id}</td>
+                      <td>{order.customer_address}</td>
+                      <td>
+                        <Button
+                          as='input'
+                          type='button'
+                          value={order.status}
+                          onClick={() => handleChangeStatus(order, i)}
+                          style={StyleSheet.flatten([
+                            styles.testButton(order.status),
+                            utilities.width100,
+                          ])}
                         />
-                      </TouchableOpacity>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
-      </Container>
+                      </td>
+                      <td>
+                        <TouchableOpacity
+                          onPress={() => handleShowModal(order)}
+                        >
+                          <FontAwesomeIcon
+                            icon={faMagnifyingGlassPlus}
+                            style={utilities.marginAuto}
+                          />
+                        </TouchableOpacity>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+        </Container>
+      </ScrollView>
 
       <CourierOrderModal
         modalVisible={modalVisible}

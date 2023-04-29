@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, ScrollView } from 'react-native';
 import OrderHistoryModal from '../components/OrderHistoryModal';
 import ordersUtils from '../utils/ordersUtils';
 import Table from 'react-bootstrap/Table';
@@ -32,42 +32,46 @@ function OrderHistoryScreen() {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <Container style={styles.container}>
-        <Row style={utilities.mbMedium}>
-          <Col>
-            <Text style={typography.h2}>MY ORDERS</Text>
-          </Col>
-        </Row>
+      <ScrollView>
+        <Container style={styles.container}>
+          <Row style={utilities.mbMedium}>
+            <Col>
+              <Text style={typography.h2}>MY ORDERS</Text>
+            </Col>
+          </Row>
 
-        <Table borderless hover style={typography.regular}>
-          <thead style={styles.tableHead}>
-            <tr>
-              <th>ORDER</th>
-              <th>STATUS</th>
-              <th>VIEW</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.length !== 0 &&
-              orders.map(order => {
-                return (
-                  <tr key={order.id}>
-                    <td>{order.restaurant_name}</td>
-                    <td style={typography.uppercase}>{order.status}</td>
-                    <td>
-                      <TouchableOpacity onPress={() => handleShowModal(order)}>
-                        <FontAwesomeIcon
-                          icon={faMagnifyingGlassPlus}
-                          style={utilities.marginAuto}
-                        />
-                      </TouchableOpacity>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
-      </Container>
+          <Table borderless hover style={typography.regular}>
+            <thead style={styles.tableHead}>
+              <tr>
+                <th>ORDER</th>
+                <th>STATUS</th>
+                <th>VIEW</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.length !== 0 &&
+                orders.map(order => {
+                  return (
+                    <tr key={order.id}>
+                      <td>{order.restaurant_name}</td>
+                      <td style={typography.uppercase}>{order.status}</td>
+                      <td>
+                        <TouchableOpacity
+                          onPress={() => handleShowModal(order)}
+                        >
+                          <FontAwesomeIcon
+                            icon={faMagnifyingGlassPlus}
+                            style={utilities.marginAuto}
+                          />
+                        </TouchableOpacity>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+        </Container>
+      </ScrollView>
 
       <OrderHistoryModal
         modalVisible={modalVisible}

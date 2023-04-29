@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Text, SafeAreaView, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Text, SafeAreaView, View, ScrollView } from 'react-native';
 import { useAuth } from '../auth';
 import restaurantsUtils from '../utils/restaurantsUtils';
 import productsUtils from '../utils/productsUtils';
@@ -44,9 +44,8 @@ function RestaurantScreen({ route }) {
   };
 
   return (
-    Object.keys(selectedRestaurant).length != 0 &&
-    products.length != 0 && (
-      <SafeAreaView style={styles.safeAreaView}>
+    <SafeAreaView style={styles.safeAreaView}>
+      <ScrollView>
         <View style={styles.container}>
           <Container style={utilities.mbSmall}>
             <Row style={utilities.mbMedium}>
@@ -85,29 +84,31 @@ function RestaurantScreen({ route }) {
           </Container>
 
           <Container>
-            {products.map(product => (
-              <Row>
-                <Col>
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    updateOrder={updateOrder}
-                  />
-                </Col>
-              </Row>
-            ))}
+            {Object.keys(selectedRestaurant).length != 0 &&
+              products.length != 0 &&
+              products.map(product => (
+                <Row>
+                  <Col>
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      updateOrder={updateOrder}
+                    />
+                  </Col>
+                </Row>
+              ))}
           </Container>
         </View>
+      </ScrollView>
 
-        <OrderConfirmModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          order={order}
-          restaurantId={restaurantId}
-          customerId={authData.customer_id}
-        />
-      </SafeAreaView>
-    )
+      <OrderConfirmModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        order={order}
+        restaurantId={restaurantId}
+        customerId={authData.customer_id}
+      />
+    </SafeAreaView>
   );
 }
 
