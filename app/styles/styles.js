@@ -196,6 +196,8 @@ export default StyleSheet.create({
   modalIcon: {
     display: 'flex',
     alignItems: 'center',
+    paddingBottom: '0.5rem',
+    height: '3rem',
   },
 
   modalFooter: {

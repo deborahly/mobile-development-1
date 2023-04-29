@@ -139,6 +139,7 @@ const OrderConfirmModal = ({
                   <FontAwesomeIcon
                     icon={faCircleCheck}
                     style={{ color: '#609475' }}
+                    size='sm'
                   />
                 </View>
                 <View>
@@ -155,6 +156,7 @@ const OrderConfirmModal = ({
                   <FontAwesomeIcon
                     icon={faCircleExclamation}
                     style={{ color: '#851919' }}
+                    size='sm'
                   />
                 </View>
                 <View>
