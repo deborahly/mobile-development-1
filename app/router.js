@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,6 +16,9 @@ import CourierAccountScreen from './screens/CourierAccountScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBurger } from '@fortawesome/free-solid-svg-icons/faBurger';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons/faClockRotateLeft';
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import styles from './styles/styles';
+import colors from './styles/colors';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,8 +67,8 @@ const AppTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: colors.black,
+        tabBarInactiveTintColor: colors.black,
       }}
     >
       <Tab.Screen
@@ -72,7 +76,11 @@ const AppTab = () => {
         component={RestaurantStackScreen}
         options={{
           header: () => <Header />,
-          tabBarIcon: ({ focused }) => <FontAwesomeIcon icon={faBurger} />,
+          tabBarIcon: ({ focused }) => (
+            <View style={focused && styles.bottomTabIcon}>
+              <FontAwesomeIcon icon={faBurger} />
+            </View>
+          ),
         }}
       />
       <Tab.Screen
@@ -81,7 +89,9 @@ const AppTab = () => {
         options={{
           header: () => <Header />,
           tabBarIcon: ({ focused }) => (
-            <FontAwesomeIcon icon={faClockRotateLeft} />
+            <View style={focused && styles.bottomTabIcon}>
+              <FontAwesomeIcon icon={faClockRotateLeft} />
+            </View>
           ),
         }}
       />
@@ -90,7 +100,11 @@ const AppTab = () => {
         component={AccountScreen}
         options={{
           header: () => <Header />,
-          tabBarIcon: ({ focused }) => <FontAwesomeIcon icon={faBurger} />,
+          tabBarIcon: ({ focused }) => (
+            <View style={focused && styles.bottomTabIcon}>
+              <FontAwesomeIcon icon={faUser} />
+            </View>
+          ),
         }}
       />
     </Tab.Navigator>
@@ -120,8 +134,8 @@ const CourierAppTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: colors.black,
+        tabBarInactiveTintColor: colors.black,
       }}
     >
       <Tab.Screen
@@ -129,7 +143,11 @@ const CourierAppTab = () => {
         component={DeliveriesScreen}
         options={{
           header: () => <Header />,
-          tabBarIcon: ({ focused }) => <FontAwesomeIcon icon={faBurger} />,
+          tabBarIcon: ({ focused }) => (
+            <View style={focused && styles.bottomTabIcon}>
+              <FontAwesomeIcon icon={faUser} />
+            </View>
+          ),
         }}
       />
 
@@ -138,7 +156,11 @@ const CourierAppTab = () => {
         component={CourierAccountScreen}
         options={{
           header: () => <Header />,
-          tabBarIcon: ({ focused }) => <FontAwesomeIcon icon={faBurger} />,
+          tabBarIcon: ({ focused }) => (
+            <View style={focused && styles.bottomTabIcon}>
+              <FontAwesomeIcon icon={faBurger} />
+            </View>
+          ),
         }}
       />
     </Tab.Navigator>

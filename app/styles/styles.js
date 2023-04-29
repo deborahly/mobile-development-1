@@ -234,4 +234,11 @@ export default StyleSheet.create({
     backgroundColor: colors.black,
     color: colors.white,
   },
+
+  bottomTabIcon: {
+    backgroundColor: colors.purple,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 25,
+  },
 });
