@@ -25,22 +25,27 @@ export default {
     fontSize: '11px',
   },
 
+  medium: {
+    fontSize: '14px',
+    fontWeight: 400,
+  },
+
+  regular: {
+    fontSize: '13px',
+    fontWeight: 400,
+  },
+
+  regularOswald: {
+    fontFamily: "'oswald-regular', sans-serif",
+    fontSize: '13px',
+  },
+
   strong: {
     fontWeight: 600,
   },
 
   uppercase: {
     textTransform: 'uppercase',
-  },
-
-  regular: {
-    fontSize: '13px',
-    fontWeight: 500,
-  },
-
-  regularOswald: {
-    fontFamily: "'oswald-regular', sans-serif",
-    fontSize: '13px',
   },
 
   colorWhite: {
